@@ -1,10 +1,11 @@
 package istio
 
 import (
+	"log"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	v1alpha3spec "istio.io/api/networking/v1alpha3"
 	"istio.io/client-go/pkg/apis/networking/v1alpha3"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func resourceVirtualService() *schema.Resource {
@@ -30,38 +31,25 @@ func resourceVirtualService() *schema.Resource {
 	}
 }
 
-func virtualService() *v1alpha3.VirtualService {
-	return &v1alpha3.VirtualService{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      "hostname",
-			Namespace: "route.Namespace",
-		},
-		Spec: v1alpha3spec.VirtualService{
-			Hosts:    []string{"hostname"},
-			Gateways: []string{"route.Name"},
-			Http: []*v1alpha3spec.HTTPRoute{{
-				Match: []*v1alpha3spec.HTTPMatchRequest{{
-					Uri: &v1alpha3spec.StringMatch{
-						MatchType: &v1alpha3spec.StringMatch_Prefix{
-							Prefix: "/",
-						},
-					},
-				}},
-				Route: []*v1alpha3spec.HTTPRouteDestination{{
-					Destination: &v1alpha3spec.Destination{
-						Port: &v1alpha3spec.PortSelector{
-							Number: uint32(22),
-						},
-						Host: "deployment.Name",
-					},
-				}},
-			}},
-		},
+func expandVirtualServiceSpec(virtualservice []interface{}) (*v1alpha3spec.VirtualService, error) {
+	obj := &v1alpha3spec.VirtualService{}
+	if len(virtualservice) == 0 || virtualservice[0] == nil {
+		return obj, nil
 	}
+	return obj, nil
 }
 
 func resourceVirtualServiceCreate(d *schema.ResourceData, meta interface{}) error {
-
+	metadata := expandMetadata(d.Get("metadata").([]interface{}))
+	spec, err := expandVirtualServiceSpec(d.Get("spec").([]interface{}))
+	if err != nil {
+		return err
+	}
+	vs := v1alpha3.VirtualService{
+		ObjectMeta: metadata,
+		Spec:       *spec,
+	}
+	log.Printf("[INFO] Creating New VirtualService %#v", vs)
 	return nil
 }
 
