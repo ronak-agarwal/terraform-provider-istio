@@ -1,6 +1,10 @@
 package istio
 
-import "github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+import (
+	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
 
 func destinationFields() map[string]*schema.Schema {
 	d := map[string]*schema.Schema{
@@ -105,6 +109,7 @@ func headersFields() map[string]*schema.Schema {
 }
 
 func virtualServiceSpecFields() map[string]*schema.Schema {
+	log.Printf("[INFO] Creating New VirtualService virtualServiceSpecFields")
 	vs := map[string]*schema.Schema{
 		"hosts": {
 			Type:        schema.TypeList,
@@ -190,7 +195,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 									Optional:    true,
 									Description: "HTTP match name.",
 								},
-								"sourceLabels": {
+								"sourcelabels": {
 									Type:        schema.TypeMap,
 									Optional:    true,
 									Description: "HTTP match name.",
@@ -203,22 +208,22 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Type: schema.TypeString,
 									},
 								},
-								"queryParams": {
+								"queryparams": {
 									Type:        schema.TypeMap,
 									Optional:    true,
 									Description: "HTTP match name.",
 								},
-								"ignoreUriCase": {
+								"ignoreuricase": {
 									Type:        schema.TypeBool,
 									Optional:    true,
 									Description: "HTTP match name.",
 								},
-								"withoutHeaders": {
+								"withoutheaders": {
 									Type:        schema.TypeMap,
 									Optional:    true,
 									Description: "HTTP match name.",
 								},
-								"sourceNamespace": {
+								"sourcenamespace": {
 									Type:        schema.TypeString,
 									Optional:    true,
 									Description: "HTTP match name.",
@@ -272,7 +277,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 									Optional:    true,
 									Description: "HTTP route HTTPRedirect.",
 								},
-								"redirectCode": {
+								"redirectcode": {
 									Type:        schema.TypeInt,
 									Optional:    true,
 									Description: "HTTP route HTTPRedirect.",
@@ -334,17 +339,17 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 									Optional:    true,
 									Description: "HTTP route HTTPRetry.",
 								},
-								"perTryTimeout": {
+								"pertrytimeout": {
 									Type:        schema.TypeInt,
 									Optional:    true,
 									Description: "HTTP route HTTPRetry.",
 								},
-								"retryOn": {
+								"retryon": {
 									Type:        schema.TypeString,
 									Optional:    true,
 									Description: "HTTP route HTTPRetry.",
 								},
-								"retryRemoteLocalities": {
+								"retryremotelocalities": {
 									Type:        schema.TypeBool,
 									Optional:    true,
 									Description: "HTTP route HTTPRetry.",
@@ -364,7 +369,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 									Description: "HTTP route delay HTTPFaultInjection.",
 									Elem: &schema.Resource{
 										Schema: map[string]*schema.Schema{
-											"fixedDelay": {
+											"fixeddelay": {
 												Type:        schema.TypeInt,
 												Optional:    true,
 												Description: "HTTP route delay HTTPFaultInjection.",
@@ -388,7 +393,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 									Description: "HTTP route abort HTTPFaultInjection.",
 									Elem: &schema.Resource{
 										Schema: map[string]*schema.Schema{
-											"httpStatus": {
+											"httpstatus": {
 												Type:        schema.TypeInt,
 												Optional:    true,
 												Description: "HTTP route abort HTTPFaultInjection.",
@@ -412,18 +417,18 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 							Schema: destinationFields(),
 						},
 					},
-					"mirrorPercentage": {
+					"mirrorpercentage": {
 						Type:        schema.TypeFloat,
 						Optional:    true,
 						Description: "HTTP route HTTPRoute.",
 					},
-					"corsPolicy": {
+					"corspolicy": {
 						Type:        schema.TypeList,
 						Optional:    true,
 						Description: "HTTP route CorsPolicy.",
 						Elem: &schema.Resource{
 							Schema: map[string]*schema.Schema{
-								"allowOrigins": {
+								"alloworigins": {
 									Type:        schema.TypeList,
 									Optional:    true,
 									Description: "HTTP route allowOrigins CorsPolicy.",
@@ -431,7 +436,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Schema: stringMatchFields(),
 									},
 								},
-								"allowMethods": {
+								"allowmethods": {
 									Type:        schema.TypeList,
 									Description: "List of allowMethods CorsPolicy.",
 									Optional:    true,
@@ -439,7 +444,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Type: schema.TypeString,
 									},
 								},
-								"allowHeaders": {
+								"allowheaders": {
 									Type:        schema.TypeList,
 									Description: "List of allowHeaders CorsPolicy.",
 									Optional:    true,
@@ -447,7 +452,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Type: schema.TypeString,
 									},
 								},
-								"exposeHeaders": {
+								"exposeheaders": {
 									Type:        schema.TypeList,
 									Description: "List of exposeHeaders CorsPolicy.",
 									Optional:    true,
@@ -455,12 +460,12 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Type: schema.TypeString,
 									},
 								},
-								"maxAge": {
+								"maxage": {
 									Type:        schema.TypeInt,
 									Optional:    true,
 									Description: "HTTP route CorsPolicy.",
 								},
-								"allowCredentials": {
+								"allowcredentials": {
 									Type:        schema.TypeBool,
 									Optional:    true,
 									Description: "HTTP route CorsPolicy.",
@@ -476,7 +481,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 							Schema: headersFields(),
 						},
 					},
-					"mirrorPercent": {
+					"mirrorpercent": {
 						Type:        schema.TypeInt,
 						Optional:    true,
 						Description: "HTTP route match.",
@@ -498,7 +503,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 						Description: "Specify TLS TLSMatchAttributes",
 						Elem: &schema.Resource{
 							Schema: map[string]*schema.Schema{
-								"sniHosts": {
+								"snihosts": {
 									Type:        schema.TypeList,
 									Description: "List of TLSMatchAttributes route sniHosts.",
 									Optional:    true,
@@ -506,7 +511,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Type: schema.TypeString,
 									},
 								},
-								"destinationSubnets": {
+								"destinationsubnets": {
 									Type:        schema.TypeList,
 									Description: "List of TLSMatchAttributes route destinationSubnets.",
 									Optional:    true,
@@ -519,7 +524,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 									Optional:    true,
 									Description: "Specify TLSMatchAttributes route.",
 								},
-								"sourceLabels": {
+								"sourcelabels": {
 									Type:        schema.TypeMap,
 									Optional:    true,
 									Description: "Specify TLSMatchAttributes route.",
@@ -532,7 +537,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Type: schema.TypeString,
 									},
 								},
-								"sourceNamespace": {
+								"sourcenamespace": {
 									Type:        schema.TypeString,
 									Optional:    true,
 									Description: "Specify TLSMatchAttributes route.",
@@ -580,7 +585,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 						Description: "Specify TCP L4MatchAttributes match.",
 						Elem: &schema.Resource{
 							Schema: map[string]*schema.Schema{
-								"destinationSubnets": {
+								"destinationsubnets": {
 									Type:        schema.TypeList,
 									Description: "List of TCP L4MatchAttributes match destinationSubnets.",
 									Optional:    true,
@@ -593,7 +598,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 									Optional:    true,
 									Description: "Specify TCP L4MatchAttributes match.",
 								},
-								"sourceLabels": {
+								"sourcelabels": {
 									Type:        schema.TypeMap,
 									Optional:    true,
 									Description: "Specify TCP L4MatchAttributes match",
@@ -606,7 +611,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 										Type: schema.TypeString,
 									},
 								},
-								"sourceNamespace": {
+								"sourcenamespace": {
 									Type:        schema.TypeString,
 									Optional:    true,
 									Description: "Specify TLS RouteDestination route.",
@@ -640,7 +645,7 @@ func virtualServiceSpecFields() map[string]*schema.Schema {
 				},
 			},
 		},
-		"exportTo": {
+		"exportto": {
 			Type:        schema.TypeList,
 			Description: "List of exports.",
 			Optional:    true,

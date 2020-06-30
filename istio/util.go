@@ -1,6 +1,24 @@
 package istio
 
-import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+import (
+	"strings"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+func expandStringList(configured []interface{}) []string {
+	if configured[0] != nil && len(configured) == 1 && strings.Contains(configured[0].(string), ",") {
+		return strings.Split(configured[0].(string), ",")
+	}
+
+	vs := make([]string, 0, len(configured))
+	for _, v := range configured {
+		if v != nil {
+			vs = append(vs, v.(string))
+		}
+	}
+	return vs
+}
 
 func expandMetadata(in []interface{}) metav1.ObjectMeta {
 	meta := metav1.ObjectMeta{}

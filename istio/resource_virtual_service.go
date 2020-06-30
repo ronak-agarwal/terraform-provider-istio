@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	v1alpha3spec "istio.io/api/networking/v1alpha3"
 	"istio.io/client-go/pkg/apis/networking/v1alpha3"
 )
 
@@ -31,16 +30,10 @@ func resourceVirtualService() *schema.Resource {
 	}
 }
 
-func expandVirtualServiceSpec(virtualservice []interface{}) (*v1alpha3spec.VirtualService, error) {
-	obj := &v1alpha3spec.VirtualService{}
-	if len(virtualservice) == 0 || virtualservice[0] == nil {
-		return obj, nil
-	}
-	return obj, nil
-}
-
 func resourceVirtualServiceCreate(d *schema.ResourceData, meta interface{}) error {
+	log.Printf("[INFO] Creating New VirtualService resourceVirtualServiceCreate")
 	metadata := expandMetadata(d.Get("metadata").([]interface{}))
+	log.Printf("[INFO] Creating New VirtualService metadata %#v", metadata)
 	spec, err := expandVirtualServiceSpec(d.Get("spec").([]interface{}))
 	if err != nil {
 		return err

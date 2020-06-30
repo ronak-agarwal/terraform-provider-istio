@@ -2,6 +2,7 @@ package istio
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
@@ -34,6 +35,7 @@ func metadataFields(objectName string) map[string]*schema.Schema {
 }
 
 func namespacedMetadataSchema(objectName string) *schema.Schema {
+	log.Printf("[INFO] Creating New VirtualService namespacedMetadataSchema")
 	fields := metadataFields(objectName)
 	fields["namespace"] = &schema.Schema{
 		Type:        schema.TypeString,
