@@ -1,13 +1,14 @@
 # terraform-provider-istio
 
-This plugin supports istio 1.6
+This plugin supports istio 1.6.x
 
 STATUS - In Development
 
-## Prerequisite
+## Requirements
 1. You need Istio to be installed on your Kubernetes cluster (in istio-system namespace) using Operator https://istio.io/latest/docs/setup/install/standalone-operator/ (Although this plugin can be extended to Istio on VMs but need to be tested)
+2. Terraform 0.12.x
 
-## Discription
+## Description
 Using this plugin you can perform regular terraform operation to create, delete, update, read different resources of Istio:
 1. NetworkingV1alpha3 (VirtualService, DestinationRule, Sidecar, ServiceEntry, Gateway, Envoyfilter, Workloadentry)
 2. SecurityV1beta1 (AuthorizationPolicy, PeerAuthentication, RequestAuthentication)
@@ -67,3 +68,6 @@ resource "istio_virtual_service" "example"{
     }
 }
 ```
+
+##Contributing to the provider
+Appreciate your contribution to the provider
