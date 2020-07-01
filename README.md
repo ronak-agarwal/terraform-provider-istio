@@ -69,5 +69,5 @@ resource "istio_virtual_service" "example"{
 }
 ```
 
-##Contributing to the provider
+## Contribution to the provider
 Appreciate your contribution to the provider
