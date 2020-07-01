@@ -21,11 +21,6 @@ func diffStringMap(pathPrefix string, oldV, newV map[string]interface{}) PatchOp
 		return ops
 	}
 
-	// This is suboptimal for adding whole new map from scratch
-	// or deleting the whole map, but it's actually intention.
-	// There may be some other map items managed outside of TF
-	// and we don't want to touch these.
-
 	for k := range oldV {
 		if _, ok := newV[k]; ok {
 			continue
@@ -59,8 +54,6 @@ func diffStringMap(pathPrefix string, oldV, newV map[string]interface{}) PatchOp
 	return ops
 }
 
-// escapeJsonPointer escapes string per RFC 6901
-// so it can be used as path in JSON patch operations
 func escapeJsonPointer(path string) string {
 	path = strings.Replace(path, "~", "~0", -1)
 	path = strings.Replace(path, "/", "~1", -1)
