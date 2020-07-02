@@ -3,6 +3,7 @@ module github.com/ronak-agarwal/terraform-provider-istio
 go 1.14
 
 require (
+	github.com/gogo/protobuf v1.3.1
 	github.com/googleapis/gnostic v0.4.2 // indirect
 	github.com/hashicorp/terraform-plugin-sdk v1.14.0
 	github.com/imdario/mergo v0.3.9 // indirect
