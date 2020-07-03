@@ -79,19 +79,30 @@ func expandTrafficPolicy(trafficpolicy []interface{}) (*v1alpha3spec.TrafficPoli
 	return obj, nil
 }
 
+func getSimpleLB(s string) (v int32) {
+	switch s {
+	case "ROUND_ROBIN":
+		return 0
+	case "LEAST_CONN":
+		return 1
+	case "RANDOM":
+		return 2
+	case "PASSTHROUGH":
+		return 3
+	}
+	return 0
+}
+
 func expandLoadBalancer(loadbalancer []interface{}) (*v1alpha3spec.LoadBalancerSettings, error) {
 	obj := &v1alpha3spec.LoadBalancerSettings{}
 	if len(loadbalancer) == 0 || loadbalancer[0] == nil {
 		return obj, nil
 	}
 	lb := loadbalancer[0].(map[string]interface{})
-	if simple, ok := lb["simple"].([]interface{}); ok && len(simple) > 0 {
+	if simple, ok := lb["simple"].(string); ok && lb["simple"] != "" {
 		objsimple := &v1alpha3spec.LoadBalancerSettings_Simple{}
-		s := simple[0].(map[string]interface{})
-		if ty, ok := s["type"].(int32); ok {
-			objsimple.Simple = v1alpha3spec.LoadBalancerSettings_SimpleLB(ty)
-			obj.LbPolicy = objsimple
-		}
+		objsimple.Simple = v1alpha3spec.LoadBalancerSettings_SimpleLB(getSimpleLB(simple))
+		obj.LbPolicy = objsimple
 	}
 	if hash, ok := lb["consistenthash"].([]interface{}); ok && len(hash) > 0 {
 		objhash := &v1alpha3spec.LoadBalancerSettings_ConsistentHash{}
@@ -116,11 +127,26 @@ func expandLoadBalancer(loadbalancer []interface{}) (*v1alpha3spec.LoadBalancerS
 			objhashcookie.HttpCookie = &a
 			objhashLB.HashKey = objhashcookie
 		}
+		//UseSourceIp
+		if sip, ok := h["usesourceip"]; ok && h["usesourceip"] != "" {
+			objsiplb := &v1alpha3spec.LoadBalancerSettings_ConsistentHashLB_UseSourceIp{}
+			objsiplb.UseSourceIp = sip.(bool)
+			objhashLB.HashKey = objsiplb
+		}
+		//HttpQueryParameterName
+		if hqpn, ok := h["httpqueryparametername"]; ok && h["httpqueryparametername"] != "" {
+			objhqpn := &v1alpha3spec.LoadBalancerSettings_ConsistentHashLB_HttpQueryParameterName{}
+			objhqpn.HttpQueryParameterName = hqpn.(string)
+			objhashLB.HashKey = objhqpn
+		}
 		objhash.ConsistentHash = objhashLB
 		obj.LbPolicy = objhash
 	}
-	//if pset, ok := lb["localitylbsetting"].([]interface{}); ok && len(pset) > 0 {
-	//}
+	if lbs, ok := lb["localitylbsetting"].([]interface{}); ok && len(lbs) > 0 {
+		objlbsetting := &v1alpha3spec.LocalityLoadBalancerSetting{}
+
+		obj.LocalityLbSetting = objlbsetting
+	}
 	return obj, nil
 }
 

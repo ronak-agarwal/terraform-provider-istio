@@ -45,3 +45,30 @@ resource "istio_virtual_service" "example"{
        }
     }
 }
+
+
+resource "istio_destination_rule" "test" {
+  metadata {
+    name = "terraform-example"
+    namespace = "test"
+  }
+  spec {
+    host = "ratings.prod.svc.cluster.local"
+    trafficpolicy {
+      loadbalancer {
+        simple = "LEAST_CONN"
+      }
+    }
+    subsets {
+        name = "testversion"
+        labels = {
+          version = "v3"
+        }
+        trafficpolicy {
+          loadbalancer {
+            simple = "ROUND_ROBIN"
+          }
+        }
+      }
+   }
+}

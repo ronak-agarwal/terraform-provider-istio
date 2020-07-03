@@ -27,7 +27,8 @@ func Provider() terraform.ResourceProvider {
 		DataSourcesMap: map[string]*schema.Resource{},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"istio_virtual_service": resourceVirtualService(),
+			"istio_virtual_service":  resourceVirtualService(),
+			"istio_destination_rule": resourceDestinationRule(),
 		},
 		ConfigureFunc: providerConfigure,
 	}

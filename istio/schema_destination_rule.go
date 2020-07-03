@@ -9,19 +9,9 @@ import (
 func loadbalancerFields() map[string]*schema.Schema {
 	lb := map[string]*schema.Schema{
 		"simple": {
-			Type:        schema.TypeList,
+			Type:        schema.TypeString,
 			Optional:    true,
-			MaxItems:    1,
-			Description: "Specify Destination Rule trafficpolicy",
-			Elem: &schema.Resource{
-				Schema: map[string]*schema.Schema{
-					"type": {
-						Type:        schema.TypeInt,
-						Optional:    true,
-						Description: "Destination route.",
-					},
-				},
-			},
+			Description: "Destination route.",
 		},
 		"consistenthash": {
 			Type:        schema.TypeList,
@@ -364,7 +354,7 @@ func outlierDetectionFields() map[string]*schema.Schema {
 			Optional:    true,
 			Description: "Destination route.",
 		},
-		"minHealthpercent": {
+		"minhealthpercent": {
 			Type:        schema.TypeInt,
 			Optional:    true,
 			Description: "Destination route.",
