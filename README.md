@@ -70,6 +70,7 @@ resource "istio_virtual_service" "example"{
 ```
 
 2. DestinationRule
+-- In Development --
 
 ```hcl
 resource "istio_destination_rule" "test" {
@@ -98,6 +99,52 @@ resource "istio_destination_rule" "test" {
    }
 }
 ```
+
+3. Sidecar
+
+-- Yet to start --
+
+```hcl
+resource "istio_sidecar" "test" {
+}
+```
+
+3. ServiceEntry
+
+-- Yet to start --
+
+```hcl
+resource "istio_service_entry" "test" {
+}
+```
+
+4. Gateway
+
+-- Yet to start --
+
+```hcl
+resource "istio_gateway" "test" {
+}
+```
+
+5. Envoyfilter
+
+-- Yet to start --
+
+```hcl
+resource "istio_envoy_filter" "test" {
+}
+```
+
+6. Workloadentry
+
+-- Yet to start --
+
+```hcl
+resource "istio_workload_entry" "test" {
+}
+```
+
 
 ## Contribution to the provider
 Appreciate your contribution to the provider
