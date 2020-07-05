@@ -184,6 +184,16 @@ func expandSubsets(subsets []interface{}) ([]*v1alpha3spec.Subset, error) {
 		if name, ok := subset["name"]; ok {
 			obj.Name = name.(string)
 		}
+		if label, ok := subset["labels"].(map[string]interface{}); ok && len(label) > 0 {
+			obj.Labels = expandStringMap(label)
+		}
+		if v, ok := subset["trafficpolicy"].([]interface{}); ok && len(v) > 0 {
+			tp, err := expandTrafficPolicy(v)
+			if err != nil {
+				return objs, err
+			}
+			obj.TrafficPolicy = tp
+		}
 		objs[i] = &obj
 	}
 	return objs, nil
