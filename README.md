@@ -15,6 +15,8 @@ Using this plugin you can perform regular terraform operation to create, delete,
 
 ## Usage
 
+### (A) NetworkingV1alpha3
+
 1. VirtualService
 
 -- In Development --
@@ -137,7 +139,7 @@ spec {
 
 4. ServiceEntry
 
--- In Development --
+-- In Development -
 
 ```hcl
 resource "istio_service_entry" "example"{
@@ -200,6 +202,34 @@ resource "istio_envoy_filter" "test" {
 
 ```hcl
 resource "istio_workload_entry" "test" {
+}
+```
+
+### (B) SecurityV1beta1
+
+1. AuthorizationPolicy
+
+-- Yet to start --
+
+```hcl
+resource "istio_authorization_policy" "test" {
+}
+```
+
+2. PeerAuthentication
+
+-- Yet to start --
+
+```hcl
+resource "istio_peer_authentication" "test" {
+}
+```
+
+3. RequestAuthentication
+-- Yet to start --
+
+```hcl
+resource "istio_request_authentication" "test" {
 }
 ```
 
