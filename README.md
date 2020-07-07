@@ -135,16 +135,48 @@ spec {
 }
 ```
 
-3. ServiceEntry
+4. ServiceEntry
 
--- Yet to start --
+-- In Development --
 
 ```hcl
-resource "istio_service_entry" "test" {
+resource "istio_service_entry" "example"{
+  metadata {
+    name = "terraform-example"
+    namespace = "test"
+  }
+  spec {
+      hosts = ["foo.bar.com"]
+      ports {
+          number = 80
+          name = "http"
+          protocol = "HTTP"
+      }
+      location = "MESH_EXTERNAL"
+      resolution = "DNS"
+      endpoints {
+          address = "us.foo.bar.com"
+          ports = {
+            http = 8080
+          }
+       }
+      endpoints {
+          address = "uk.foo.bar.com"
+          ports = {
+            http = 9080
+          }
+       }
+      endpoints {
+          address = "in.foo.bar.com"
+          ports = {
+            http = 7080
+          }
+       }
+    }
 }
 ```
 
-4. Gateway
+5. Gateway
 
 -- Yet to start --
 
@@ -153,7 +185,7 @@ resource "istio_gateway" "test" {
 }
 ```
 
-5. Envoyfilter
+6. Envoyfilter
 
 -- Yet to start --
 
@@ -162,7 +194,7 @@ resource "istio_envoy_filter" "test" {
 }
 ```
 
-6. Workloadentry
+7. Workloadentry
 
 -- Yet to start --
 

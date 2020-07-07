@@ -101,3 +101,39 @@ spec {
     }
   }
 }
+
+
+resource "istio_service_entry" "example"{
+  metadata {
+    name = "terraform-example"
+    namespace = "test"
+  }
+  spec {
+      hosts = ["foo.bar.com"]
+      ports {
+          number = 80
+          name = "http"
+          protocol = "HTTP"
+      }
+      location = "MESH_EXTERNAL"
+      resolution = "DNS"
+      endpoints {
+          address = "us.foo.bar.com"
+          ports = {
+            http = 8080
+          }
+       }
+      endpoints {
+          address = "uk.foo.bar.com"
+          ports = {
+            http = 9080
+          }
+       }
+      endpoints {
+          address = "in.foo.bar.com"
+          ports = {
+            http = 7080
+          }
+       }
+    }
+}

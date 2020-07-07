@@ -2,6 +2,7 @@ package istio
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -51,6 +52,15 @@ func expandMetadata(in []interface{}) metav1.ObjectMeta {
 	}
 
 	return meta
+}
+
+func expandStringUintMap(m map[string]interface{}) map[string]uint32 {
+	result := make(map[string]uint32)
+	for k, v := range m {
+		val, _ := strconv.Atoi(v.(string))
+		result[k] = uint32(val)
+	}
+	return result
 }
 
 func expandStringMap(m map[string]interface{}) map[string]string {
