@@ -137,7 +137,7 @@ spec {
 
 4. ServiceEntry
 
--- In Development ---
+-- In Development --
 
 ```hcl
 resource "istio_service_entry" "example"{
