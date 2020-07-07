@@ -241,7 +241,7 @@ func expandDestination(destination []interface{}) (*v1alpha3spec.Destination, er
 	if subset, ok := dest["subset"]; ok && dest["subset"] != "" {
 		obj.Subset = subset.(string)
 	}
-	if port, ok := dest["port"].(int); ok && dest["port"].(int) > 0 {
+	if port, ok := dest["port"].(int); ok && port > 0 {
 		log.Printf("[INFO] Creating expandDestination port : %#v", port)
 		objps := &v1alpha3spec.PortSelector{}
 		objps.Number = uint32(port)

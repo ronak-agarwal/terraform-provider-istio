@@ -106,6 +106,31 @@ resource "istio_destination_rule" "test" {
 
 ```hcl
 resource "istio_sidecar" "test" {
+metadata {
+  name = "terraform-example"
+  namespace = "test"
+ }
+spec {
+  workloadselector {
+      labels = {
+        app = "productpage"
+      }
+    }
+  ingress {
+      bind = "172.16.1.32"
+      port {
+          number = 80
+          protocol = "HTTP"
+          name = "somename"
+      }
+      defaultendpoint = "127.0.0.1:8080"
+      capturemode = "NONE"
+    }
+  egress {
+      capturemode = "IPTABLES"
+      hosts = ["*/*"]
+    }
+  }
 }
 ```
 
