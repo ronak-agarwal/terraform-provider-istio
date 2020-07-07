@@ -70,6 +70,7 @@ resource "istio_virtual_service" "example"{
 ```
 
 2. DestinationRule
+
 -- In Development --
 
 ```hcl
@@ -102,7 +103,7 @@ resource "istio_destination_rule" "test" {
 
 3. Sidecar
 
--- Yet to start --
+-- In Development --
 
 ```hcl
 resource "istio_sidecar" "test" {
