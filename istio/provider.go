@@ -31,6 +31,7 @@ func Provider() terraform.ResourceProvider {
 			"istio_destination_rule": resourceDestinationRule(),
 			"istio_sidecar":          resourceSidecar(),
 			"istio_service_entry":    resourceServiceEntry(),
+			"istio_gateway":          resourceGateway(),
 		},
 		ConfigureFunc: providerConfigure,
 	}

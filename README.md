@@ -180,10 +180,83 @@ resource "istio_service_entry" "example"{
 
 5. Gateway
 
--- Yet to start --
+-- In Development -
 
 ```hcl
-resource "istio_gateway" "test" {
+resource "istio_gateway" "example"{
+  metadata {
+    name = "terraform-example"
+    namespace = "test"
+  }
+  spec {
+    selector = {
+      app = "my-gateway-controller"
+    }
+    servers {
+        port {
+          number = 80
+          name = "http"
+          protocol = "HTTP"
+        }
+        hosts = [
+          "uk.bookinfo.com",
+          "eu.bookinfo.com"
+        ]
+        tls {
+          httpsredirect = true
+        }
+      }
+    servers  {
+        port {
+          number = 443
+          name = "https-443"
+          protocol = "HTTPS"
+        }
+        hosts = [
+          "uk.bookinfo.com",
+          "eu.bookinfo.com"
+        ]
+        tls {
+          mode = "SIMPLE"
+          servercertificate = "/etc/certs/servercert.pem"
+          privatekey = "/etc/certs/privatekey.pem"
+        }
+      }
+    servers  {
+        port {
+          number = 9443
+          name = "https-9443"
+          protocol = "HTTPS"
+        }
+        hosts = [
+          "bookinfo-namespace/*.bookinfo.com"
+        ]
+        tls {
+          mode = "SIMPLE"
+          credentialname = "bookinfo-secret"
+        }
+      }
+    servers  {
+        port {
+          number = 80
+          name = "http-80"
+          protocol = "HTTP"
+        }
+        hosts = [
+          "*"
+        ]
+      }
+    servers {
+        port {
+          number = 2379
+          name = "MONGO"
+          protocol = "TCP"
+        }
+        hosts = [
+          "*"
+        ]
+     }
+  }
 }
 ```
 
