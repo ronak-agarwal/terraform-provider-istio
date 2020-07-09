@@ -291,10 +291,27 @@ resource "istio_authorization_policy" "test" {
 
 2. PeerAuthentication
 
--- Yet to start --
+-- In Development --
 
 ```hcl
-resource "istio_peer_authentication" "test" {
+resource "istio_peer_authentication" "example"{
+  metadata {
+    name = "terraform-example"
+    namespace = "test"
+  }
+  spec {
+    selector {
+      matchlabels = {
+        app = "finance"
+      }
+    }
+    mtls {
+      mode = "STRICT"
+    }
+    portlevelmtls = {
+      8080 = "DISABLE"
+    }
+  }
 }
 ```
 

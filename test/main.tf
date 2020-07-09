@@ -214,3 +214,23 @@ resource "istio_gateway" "example"{
      }
   }
 }
+
+resource "istio_peer_authentication" "example"{
+  metadata {
+    name = "terraform-example"
+    namespace = "test"
+  }
+  spec {
+    selector {
+      matchlabels = {
+        app = "finance"
+      }
+    }
+    mtls {
+      mode = "STRICT"
+    }
+    portlevelmtls = {
+      8080 = "DISABLE"
+    }
+  }
+}
